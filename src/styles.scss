@@ -124,7 +124,8 @@ img {
   position: relative;
 }
 
-.cartCounter {
+.cartCounter,
+.favCounter {
   position: absolute;
   right: -21px;
   top: -10px;
@@ -173,4 +174,18 @@ img {
   &:not(:last-child) {
     margin-bottom: 30px;
   }
+}
+
+
+.btnFav_colored {
+  fill: var(--key-color);
+}
+
+.favCounter {
+  right: 12px;
+}
+
+.header__favourite {
+  padding-right: 30px;
+  position: relative;
 }

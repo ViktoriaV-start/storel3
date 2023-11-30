@@ -4,6 +4,7 @@ import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
+import {favouriteService} from "../../services/favourite.service";
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -14,6 +15,7 @@ class ProductDetail extends Component {
 
     this.more = new ProductList();
     this.more.attach(this.view.more);
+
   }
 
   async render() {
@@ -32,6 +34,12 @@ class ProductDetail extends Component {
     this.view.description.innerText = description;
     this.view.price.innerText = formatPrice(salePriceU);
     this.view.btnBuy.onclick = this._addToCart.bind(this);
+    this.view.btnFav.onclick = this._addFavourite.bind(this);
+    this.view.btnFavColor.onclick = this._removeFavourite.bind(this);
+
+    this._setFav();
+
+    favouriteService.checkFav();
 
     const isInCart = await cartService.isInCart(this.product);
 
@@ -52,15 +60,44 @@ class ProductDetail extends Component {
 
   private _addToCart() {
     if (!this.product) return;
-
     cartService.addProduct(this.product);
     this._setInCart();
+  }
+
+  private _addFavourite() {
+    if (!this.product) return;
+    favouriteService.addProduct(this.product).then(() => this._setFav());
+  }
+
+  private _removeFavourite() {
+    if (!this.product) return;
+    favouriteService.removeProduct(this.product).then(() => this._setFav());
   }
 
   private _setInCart() {
     this.view.btnBuy.innerText = '✓ В корзине';
     this.view.btnBuy.disabled = true;
   }
+
+  private async _setFav() {
+    if (!this.product) return;
+
+    if (await favouriteService.isInFav(this.product)) {
+      document.querySelector('.btnFav[data-tag="btnFav"]')?.classList.add('hide');
+      document.querySelector('.btnFav[data-tag="btnFavColor"]')?.classList.remove('hide');
+    } else {
+      document.querySelector('.btnFav[data-tag="btnFav"]')?.classList.remove('hide');
+      document.querySelector('.btnFav[data-tag="btnFavColor"]')?.classList.add('hide');
+    }
+
+    favouriteService.checkFav();
+  }
+
+
+
+
+
+
 }
 
 export const productDetailComp = new ProductDetail(html);
