@@ -1,9 +1,9 @@
-// TODO Я бы сделала здесь наследование от общего родителя для FavouriteService и CartService, если можно, но тогда придется менять имеющийся код
-
 import { ProductData } from 'types';
 import { GeneralService } from "./general.service";
 
 const DB = '__wb-fav';
+const HEAD_HREF = '.header__favourite';
+const HEAD_COUNTER = '.js__fav-counter';
 
 class FavouriteService extends GeneralService {
 
@@ -11,10 +11,8 @@ class FavouriteService extends GeneralService {
         const products = await this.get();
         const count = products.length >= 10 ? '9+' : products.length;
 
-        console.log(document.querySelectorAll('.js__fav-counter'))
-
         //@ts-ignore
-        document.querySelectorAll('.js__fav-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
+        document.querySelectorAll(HEAD_COUNTER).forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
     }
 
     async isInFav(product: ProductData) {
@@ -25,9 +23,9 @@ class FavouriteService extends GeneralService {
     checkFav() {
         this.get().then((res) => {
             if (res.length) {
-                document.querySelector('.header__favourite')?.classList.remove('hide');
+                document.querySelector(HEAD_HREF)?.classList.remove('hide');
             } else {
-                document.querySelector('.header__favourite')?.classList.add('hide');
+                document.querySelector(HEAD_HREF)?.classList.add('hide');
             }
         })
     }

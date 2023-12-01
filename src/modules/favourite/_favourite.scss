@@ -1,11 +1,6 @@
-.homepage {
-  &__notifies {
-    &:not(:empty) {
-      margin-bottom: 3em;
-    }
-  }
+.favourite {
 
-  &__popular {
+  &__list {
     margin-top: 30px;
   }
 }

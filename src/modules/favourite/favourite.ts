@@ -1,4 +1,4 @@
-import { addElement } from '../../utils/helpers';
+
 import { Component } from '../component';
 import html from './favourite.tpl.html';
 
@@ -13,6 +13,7 @@ class Favourite extends Component {
 
     this.favouriteProducts = new ProductList();
     this.favouriteProducts.attach(this.view.favourite);
+    favouriteService.checkFav();
   }
 
   render() {
@@ -20,15 +21,6 @@ class Favourite extends Component {
         .then((products) => {
           this.favouriteProducts.update(products);
         });
-
-    const isSuccessOrder = new URLSearchParams(window.location.search).get('isSuccessOrder');
-    if (isSuccessOrder != null) {
-      const $notify = addElement(this.view.notifies, 'div', { className: 'notify' });
-      addElement($notify, 'p', {
-        innerText:
-            'Заказ оформлен. Деньги спишутся с вашей карты, менеджер может позвонить, чтобы уточнить детали доставки'
-      });
-    }
   }
 }
 

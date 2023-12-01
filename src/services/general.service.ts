@@ -38,13 +38,7 @@ export class GeneralService {
         this.updCounters();
     }
 
-     async updCounters() {
-        const products = await this.get();
-        const count = products.length >= 10 ? '9+' : products.length;
-
-        //@ts-ignore
-        document.querySelectorAll('.js__cart-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
-    }
+     async updCounters() {}
 
 
 }
