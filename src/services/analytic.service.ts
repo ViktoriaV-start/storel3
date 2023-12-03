@@ -66,8 +66,6 @@ export class AnalyticService {
     let idArr: number[] = [];
     items.forEach(el => idArr.push(el.id));
 
-
-
     let analyticsData = {
       type: 'purchase',
       payload: {
@@ -113,4 +111,3 @@ export class AnalyticService {
   }
 
 }
-

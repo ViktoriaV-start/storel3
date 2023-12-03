@@ -1,6 +1,5 @@
 import localforage from 'localforage';
 import { ProductData } from 'types';
-import { AnalyticService } from './analytic.service';
 
 
 export class GeneralService {
@@ -18,7 +17,6 @@ export class GeneralService {
   async addProduct(product: ProductData) {
     const products = await this.get();
     await this.set([...products, product]);
-    AnalyticService.sendAddedProduct(product);
   }
 
   async removeProduct(product: ProductData) {

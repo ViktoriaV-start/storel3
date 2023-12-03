@@ -35,7 +35,6 @@ export class Product {
 
     if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal');
 
-    // AnalyticService.observeElem([this.view.root, this.product]);
     AnalyticService.observeElem(this);
   }
 
@@ -46,6 +45,5 @@ export class Product {
   getIsViewed() {
     return this.isViewed;
   }
-
 
 }

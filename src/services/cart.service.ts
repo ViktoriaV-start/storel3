@@ -1,9 +1,15 @@
 import { GeneralService } from "./general.service";
 import { ProductData } from "../../types";
+import {AnalyticService} from "./analytic.service";
 
 const DB = '__wb-cart';
 
 class CartService extends GeneralService {
+
+  async addProduct(product: ProductData) {
+    super.addProduct(product);
+    AnalyticService.sendAddedProduct(product);
+  }
 
   async isInCart(product: ProductData) {
     const products = await this.get();
