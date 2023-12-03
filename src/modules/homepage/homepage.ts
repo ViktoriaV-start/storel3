@@ -3,6 +3,7 @@ import { Component } from '../component';
 import html from './homepage.tpl.html';
 
 import { ProductList } from '../productList/productList';
+//import { analyticService } from "../../services/analytic.service";
 
 class Homepage extends Component {
   popularProducts: ProductList;
@@ -33,3 +34,4 @@ class Homepage extends Component {
 }
 
 export const homepageComp = new Homepage(html);
+

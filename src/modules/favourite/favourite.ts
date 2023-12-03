@@ -18,9 +18,9 @@ class Favourite extends Component {
 
   render() {
     favouriteService.get()
-        .then((products) => {
-          this.favouriteProducts.update(products);
-        });
+       .then((products) => {
+       this.favouriteProducts.update(products);
+    });
   }
 }
 

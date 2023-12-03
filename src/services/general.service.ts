@@ -1,44 +1,45 @@
 import localforage from 'localforage';
 import { ProductData } from 'types';
+import { AnalyticService } from './analytic.service';
 
 
 export class GeneralService {
 
-    DB: string;
+  DB: string;
 
-    constructor(db: string) {
-        this.DB = db;
-    }
+  constructor(db: string) {
+    this.DB = db;
+  }
 
-    init() {
-        this.updCounters();
-    }
+  init() {
+    this.updCounters();
+  }
 
-    async addProduct(product: ProductData) {
-        const products = await this.get();
-        await this.set([...products, product]);
-    }
+  async addProduct(product: ProductData) {
+    const products = await this.get();
+    await this.set([...products, product]);
+    AnalyticService.sendAddedProduct(product);
+  }
 
-    async removeProduct(product: ProductData) {
-        const products = await this.get();
-        await this.set(products.filter(({ id }) => id !== product.id));
-    }
+  async removeProduct(product: ProductData) {
+    const products = await this.get();
+    await this.set(products.filter(({ id }) => id !== product.id));
+  }
 
-    async clear() {
-        await localforage.removeItem(this.DB);
-        this.updCounters();
-    }
+  async clear() {
+    await localforage.removeItem(this.DB);
+      this.updCounters();
+  }
 
-    async get(): Promise<ProductData[]> {
-        return (await localforage.getItem(this.DB)) || [];
-    }
+  async get(): Promise<ProductData[]> {
+    return (await localforage.getItem(this.DB)) || [];
+  }
 
-    async set(data: ProductData[]) {
-        await localforage.setItem(this.DB, data);
-        this.updCounters();
-    }
+  async set(data: ProductData[]) {
+    await localforage.setItem(this.DB, data);
+    this.updCounters();
+  }
 
-     async updCounters() {}
-
+  async updCounters() {}
 
 }

@@ -3,7 +3,7 @@ import { notFoundComp } from './modules/notFound/notFound';
 import { homepageComp } from './modules/homepage/homepage';
 import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
-import {favouriteComp} from "./modules/favourite/favourite";
+import { favouriteComp } from "./modules/favourite/favourite";
 
 const ROUTES = {
   '/': homepageComp,
@@ -22,6 +22,7 @@ export default class Router {
 
     window.addEventListener('load', this.route.bind(this));
     window.addEventListener('hashchange', this.route.bind(this));
+
   }
 
   route(e: any) {
@@ -32,5 +33,6 @@ export default class Router {
 
     component.attach(this.$appRoot);
     component.render();
+
   }
 }
