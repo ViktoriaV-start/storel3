@@ -1,5 +1,6 @@
 import { Product } from "src/modules/product/product";
 import { ProductData } from "types";
+import {genUUID} from "../utils/helpers";
 
 
 export class AnalyticService {
@@ -69,7 +70,7 @@ export class AnalyticService {
     let analyticsData = {
       type: 'purchase',
       payload: {
-        orderId: 'айдиНовогоЗаказа',
+        orderId: genUUID(),
         totalPrice: totalPrice.split(' ')[0],
         productIds: idArr
       },
