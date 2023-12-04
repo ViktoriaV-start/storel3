@@ -70,7 +70,7 @@ export class AnalyticService {
       type: 'purchase',
       payload: {
         orderId: 'айдиНовогоЗаказа',
-        totalPrice: totalPrice,
+        totalPrice: totalPrice.split(' ')[0],
         productIds: idArr
       },
       timestamp: Date.now()

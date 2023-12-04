@@ -24,6 +24,6 @@ export const formatPrice = (price: number) => {
   return (
     Math.round(price / 1000)
       .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽'
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽'
   );
 };
