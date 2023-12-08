@@ -13,8 +13,6 @@ export class Product {
   product: ProductData;
   params: ProductComponentParams;
 
-  isViewed = false;
-
   constructor(product: ProductData, params: ProductComponentParams = {}) {
     this.product = product;
     this.params = params;
@@ -36,14 +34,6 @@ export class Product {
     if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal');
 
     AnalyticService.observeElem(this);
-  }
-
-  setIsViewed(value: boolean) {
-    this.isViewed = value;
-  }
-
-  getIsViewed() {
-    return this.isViewed;
   }
 
 }
