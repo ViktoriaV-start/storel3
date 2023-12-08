@@ -85,7 +85,6 @@ export class AnalyticService {
     }
 
     this._sendAnalyticPurchase(analyticsData);
-
   }
 
   private async _sendAnalytic(data: object, url = this.url,) {
@@ -106,8 +105,8 @@ export class AnalyticService {
       if (!response.ok) {
         console.log('Ошибка при отправке данных');
         status = 'error';
-      }
-      return { status }
+      } 
+        return { status }
     } catch (er) {
       status = 'error';
       console.log(er);
