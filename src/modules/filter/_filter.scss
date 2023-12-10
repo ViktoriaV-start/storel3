@@ -96,35 +96,33 @@
     top: 4.5rem;
     left: -3px;
     width: 900px;
-    height: 500px;
-    background-color: pink;
+    padding: 2rem 0.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.16);
     border-radius: 1.3rem;
     display: flex;
     flex-direction: column;
+    row-gap: 0.8rem;
   }
 
   &__h2 {
     margin-top: 2rem;
   }
 
+  &__help-btn {
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+  }
 
-
-
+  &__help-btn:hover {
+    background-color: #f7f3f3;
+    border-radius: 8px;
+  }
 
 }
 
-//.mrgl1 {
-//  margin-left: 1rem;
-//}
-//
-//.mrgl8 {
-//  margin-left: 8px;
-//}
-//
-//.mrgl10 {
-//  margin-left: 10px;
-//}
-//
-//.mrgl14 {
-//  margin-left: 14px;
-//}
+
+.invisible {
+  visibility: hidden;
+}

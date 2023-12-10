@@ -1,11 +1,10 @@
-
 import { Component } from '../component';
 import html from './filter.tpl.html';
-
 import { ProductList } from '../productList/productList';
 
 const SELECTOR_FILTER = '.filter';
 const SELECTOR_HELP = '.filter__help';
+const SELECTOR_INPUT = '.filter__input';
 const CLASS_HELP_BTN = 'filter__help-btn';
 
 class Filter extends Component {
@@ -32,8 +31,19 @@ class Filter extends Component {
       });
     })
 
+  }
 
+  //TODO - убрать метод после окончания работы.
+  // ДВА ВРЕМЕННЫХ МЕТОДА: ДОБАВЛЯЕТ/ УДАЛЯЕТ display: none, для хедера и футера на время работы над модулем
+  private _makeVisible() {
+    document.querySelector('.header')?.classList.remove('hide');
+    document.querySelector('.footer')?.classList.remove('hide');
+  }
 
+  //TODO - убрать по окончанию работы над модулем
+  private _makeUnvisible() {
+    document.querySelector('.header')?.classList.add('hide');
+    document.querySelector('.footer')?.classList.add('hide');
   }
 
   render() {
@@ -41,21 +51,19 @@ class Filter extends Component {
   }
 
   private _init() {
-    // @ts-ignore
-    document.querySelector('.header').classList.add('hide');
-    // @ts-ignore
-    document.querySelector('.footer').classList.add('hide');
+    //TODO - убрать по окончанию работы над модулем
+    this._makeUnvisible();
 
+    //TODO - убрать по окончанию работы над модулем
     window.addEventListener('unload', () => {
       filterComp._makeVisible();
-    })
+    });
 
     this.filterContainer = document.querySelector(SELECTOR_FILTER);
     this.helpContainer = document.querySelector(SELECTOR_HELP);
 
     this.filterContainer?.addEventListener('submit', (ev) => {
       ev.preventDefault();
-      console.log(123)
         this._filter();
     })
 
@@ -70,32 +78,22 @@ class Filter extends Component {
       const { target } = ev;
 
       if (target && (target as HTMLButtonElement).classList.contains(CLASS_HELP_BTN)) {
-        let text = (target as HTMLButtonElement).textContent;
 
         // @ts-ignore
-        this.filterContainer.querySelector('input').value = target.textContent;
-
-        // @ts-ignore
-        this.helpContainer?.classList.add('hide');
-
-        if (text && text.length != 0) this._filter();
+        this.filterContainer.querySelector(SELECTOR_INPUT).value = target.textContent;
+        this._filter();
       }
+    })
+
+    this.filterContainer?.querySelector(SELECTOR_INPUT)?.addEventListener('blur', () => {
+      this.helpContainer?.classList.add('invisible');
     })
   }
 
-  private _makeVisible() {
-    // @ts-ignore
-    document.querySelector('.header').classList.remove('hide');
-    // @ts-ignore
-    document.querySelector('.footer').classList.remove('hide');
-  }
 
   private async _filter() {
 
-    // const helpContainer = document.querySelector(SELECTOR_HELP);
-    // @ts-ignore
-    this.helpContainer?.classList.add('hide');
-
+    this.helpContainer?.classList.add('invisible');
 
     const searchValue = this.filterContainer?.querySelector('input')?.value.trim() ?? '';
     const regexp = new RegExp(searchValue, 'i');
@@ -103,11 +101,10 @@ class Filter extends Component {
     if (searchValue && searchValue.length != 0) {
       this.fetching()?.then((products) => {
         this.filteredProducts.update(products.filter((el: any) => regexp.test(el.name)));
-      }).then(() => {
-        console.log((this.helpContainer?.innerHTML))
+      })
+      .then(() => {
         if (this.helpContainer?.innerHTML == '') {
-          // @ts-ignore
-          this.helpContainer?.classList.add('hide');
+          this.helpContainer?.classList.add('invisible');
         }
       })
     }
@@ -115,25 +112,20 @@ class Filter extends Component {
 
 
   fetching() {
-
-    try {
-      return fetch('/api/getProducts', {
-        headers: {
-          'x-userid': window.userId
-        }
-      })
-        .then((res) => res.json())
-    } catch (err) {
-      console.warn(err);
-      return;
-    }
-
+    return fetch('/api/getProducts', {
+      headers: {
+       'x-userid': window.userId
+      }
+    })
+      .then((res) => res.json())
+      .catch (err => {
+        console.warn(err);
+    });
   }
 
   private _showHelp(value: string) {
-    // const helpContainer = document.querySelector(SELECTOR_HELP);
-    const regexp = new RegExp(value, 'i');
 
+    const regexp = new RegExp(value, 'i');
 
     let helpText = '';
     let searchVariants: string[] = [];
@@ -146,18 +138,15 @@ class Filter extends Component {
       }
     }
 
-      searchVariants.forEach(el => helpText += `<div class="filter__help-btn">${el}</div>`)
+    searchVariants.forEach(el => helpText += `<div class="filter__help-btn">${el}</div>`)
 
-      if (helpText) {
-        this.helpContainer?.classList.remove('hide');
-        if (this.helpContainer) this.helpContainer.innerHTML = helpText;
-      } else {
-        this.helpContainer?.classList.add('hide');
-      }
-
-
+    if (helpText) {
+      this.helpContainer?.classList.remove('invisible');
+      if (this.helpContainer) this.helpContainer.innerHTML = helpText;
+    } else {
+      this.helpContainer?.classList.add('invisible');
+    }
   }
-
 
 }
 

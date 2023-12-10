@@ -6,6 +6,9 @@ import { checkoutComp } from './modules/checkout/checkout';
 import { favouriteComp } from "./modules/favourite/favourite";
 import { filterComp } from "./modules/filter/filter";
 
+
+//TODO - путь '/filter': filterComp в const ROUTES  - для тестирования модуля поиска, убрать по завершению
+
 const ROUTES = {
   '/': homepageComp,
   '/catalog': catalogComp,

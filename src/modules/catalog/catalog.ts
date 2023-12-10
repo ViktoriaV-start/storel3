@@ -15,6 +15,7 @@ class Catalog extends Component {
   }
 
   async render() {
+
     const productsResp = await fetch('/api/getProducts', {
       headers: {
         'x-userid': await userService.getId()
@@ -23,6 +24,8 @@ class Catalog extends Component {
     const products = await productsResp.json();
     this.productList.update(products);
   }
+
+
 }
 
 export const catalogComp = new Catalog(html);
