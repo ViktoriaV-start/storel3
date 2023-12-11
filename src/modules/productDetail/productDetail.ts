@@ -4,7 +4,8 @@ import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
-import {favouriteService} from "../../services/favourite.service";
+import { favouriteService } from "../../services/favourite.service";
+import { userService } from "../../services/user.service";
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -24,7 +25,7 @@ class ProductDetail extends Component {
 
     const productResp = await fetch(`/api/getProduct?id=${productId}`, {
       headers: {
-        'x-userid': window.userId
+        'x-userid': await userService.getId()
       }
     });
     this.product = await productResp.json();
@@ -41,7 +42,7 @@ class ProductDetail extends Component {
     this.view.btnFav.onclick = this._addFavourite.bind(this);
     this.view.btnFavColor.onclick = this._removeFavourite.bind(this);
 
-    await this._setFav();
+    this._setFav();
 
     const isInCart = await cartService.isInCart(this.product);
 
@@ -53,8 +54,11 @@ class ProductDetail extends Component {
         this.view.secretKey.setAttribute('content', secretKey);
       });
 
-    fetch('/api/getPopularProducts')
-      .then((res) => res.json())
+    fetch('/api/getPopularProducts', {
+      headers: {
+        'x-userid': await userService.getId()
+      }
+    }).then((res) => res.json())
       .then((products) => {
         this.more.update(products);
       });
@@ -94,6 +98,7 @@ class ProductDetail extends Component {
 
     favouriteService.checkFav();
   }
+
 }
 
 export const productDetailComp = new ProductDetail(html);
