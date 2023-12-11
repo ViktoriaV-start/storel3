@@ -4,7 +4,7 @@ import html from './checkout.tpl.html';
 import { formatPrice } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
-import { analyticSevice } from "../../services/analytic.service";
+import { analyticService } from "../../services/analytic.service";
 
 
 class Checkout extends Component {
@@ -39,7 +39,7 @@ class Checkout extends Component {
       method: 'POST',
       body: JSON.stringify(this.products)
     });
-    analyticSevice.sendPurchase(this.products, this.totalPrice);
+    analyticService.sendPurchase(this.products, this.totalPrice);
     window.location.href = '/?isSuccessOrder';
   }
 }

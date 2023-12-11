@@ -145,4 +145,4 @@ export class AnalyticService {
 
 }
 
-export const analyticSevice = new AnalyticService();
+export const analyticService = new AnalyticService();
