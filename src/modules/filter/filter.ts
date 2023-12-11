@@ -35,13 +35,13 @@ class Filter extends Component {
 
   //TODO - убрать метод после окончания работы.
   // ДВА ВРЕМЕННЫХ МЕТОДА: ДОБАВЛЯЕТ/ УДАЛЯЕТ display: none, для хедера и футера на время работы над модулем
-  private _makeVisible() {
+  private _TEMPORARYmakeVisible() {
     document.querySelector('.header')?.classList.remove('hide');
     document.querySelector('.footer')?.classList.remove('hide');
   }
 
   //TODO - убрать по окончанию работы над модулем
-  private _makeUnvisible() {
+  private _TEMPORARYmakeUnvisible() {
     document.querySelector('.header')?.classList.add('hide');
     document.querySelector('.footer')?.classList.add('hide');
   }
@@ -50,13 +50,14 @@ class Filter extends Component {
     this._init();
   }
 
+
   private _init() {
     //TODO - убрать по окончанию работы над модулем
-    this._makeUnvisible();
+    this._TEMPORARYmakeUnvisible();
 
     //TODO - убрать по окончанию работы над модулем
     window.addEventListener('unload', () => {
-      filterComp._makeVisible();
+      filterComp._TEMPORARYmakeVisible();
     });
 
     this.filterContainer = document.querySelector(SELECTOR_FILTER);
@@ -86,14 +87,12 @@ class Filter extends Component {
     })
 
     this.filterContainer?.querySelector(SELECTOR_INPUT)?.addEventListener('blur', () => {
-      this.helpContainer?.classList.add('invisible');
+      this._filter();
     })
   }
 
 
   private async _filter() {
-
-    this.helpContainer?.classList.add('invisible');
 
     const searchValue = this.filterContainer?.querySelector('input')?.value.trim() ?? '';
     const regexp = new RegExp(searchValue, 'i');
@@ -103,10 +102,10 @@ class Filter extends Component {
         this.filteredProducts.update(products.filter((el: any) => regexp.test(el.name)));
       })
       .then(() => {
-        if (this.helpContainer?.innerHTML == '') {
-          this.helpContainer?.classList.add('invisible');
-        }
+          this.helpContainer?.classList.add('hide');
       })
+    } else {
+      this.helpContainer?.classList.add('hide');
     }
   }
 
@@ -141,10 +140,10 @@ class Filter extends Component {
     searchVariants.forEach(el => helpText += `<div class="filter__help-btn">${el}</div>`)
 
     if (helpText) {
-      this.helpContainer?.classList.remove('invisible');
+      this.helpContainer?.classList.remove('hide');
       if (this.helpContainer) this.helpContainer.innerHTML = helpText;
     } else {
-      this.helpContainer?.classList.add('invisible');
+      this.helpContainer?.classList.add('hide');
     }
   }
 
