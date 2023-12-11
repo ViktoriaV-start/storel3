@@ -37,9 +37,7 @@ class ProductDetail extends Component {
     this.view.btnFav.onclick = this._addFavourite.bind(this);
     this.view.btnFavColor.onclick = this._removeFavourite.bind(this);
 
-    this._setFav();
-
-    favouriteService.checkFav();
+    await this._setFav();
 
     const isInCart = await cartService.isInCart(this.product);
 
@@ -92,12 +90,6 @@ class ProductDetail extends Component {
 
     favouriteService.checkFav();
   }
-
-
-
-
-
-
 }
 
 export const productDetailComp = new ProductDetail(html);
