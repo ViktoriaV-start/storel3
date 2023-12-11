@@ -3,7 +3,7 @@ import { View } from '../../utils/view';
 import { formatPrice } from '../../utils/helpers'
 import html from './product.tpl.html';
 import { ProductData } from 'types';
-import { AnalyticService } from '../../services/analytic.service';
+import { analyticSevice } from '../../services/analytic.service';
 
 
 type ProductComponentParams = { [key: string]: any };
@@ -33,7 +33,7 @@ export class Product {
 
     if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal');
 
-    AnalyticService.observeElem(this);
+    analyticSevice.observeElem(this);
   }
 
 }

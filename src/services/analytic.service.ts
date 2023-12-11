@@ -4,20 +4,22 @@ import { genUUID } from "../utils/helpers";
 
 
 export class AnalyticService {
-  static url = '/api/sendEvent';
+  url = '/api/sendEvent';
 
   init() {
-    window.addEventListener("load", function() {
-      let analyticsData = {
-        type: 'route',
-        payload: { url: window.location.href },
-        timestamp: Date.now()
-      }
-      AnalyticService._sendAnalytic(analyticsData);
-    });
+    window.addEventListener("load", this.sendPath.bind(this));
   }
 
-  static observeElem(item: Product) {
+  sendPath() {
+    let analyticsData = {
+      type: 'route',
+      payload: { url: window.location.href },
+      timestamp: Date.now()
+    }
+    this._sendAnalytic(analyticsData);
+  }
+
+  observeElem(item: Product) {
 
     const options = {
       root: null,
@@ -27,9 +29,9 @@ export class AnalyticService {
     const observer = new IntersectionObserver((entries) => {
 
       entries.forEach((el) => {
-        if (el.isIntersecting && !this.checkSessionData(item.product.id)) {
+        if (el.isIntersecting && !this._checkSessionData(item.product.id)) {
 
-          this.setSessionData(item.product.id);
+          this._setSessionData(item.product.id);
 
           fetch(`/api/getProductSecretKey?id=${item.product.id}`)
             .then((res) => res.json())
@@ -44,7 +46,7 @@ export class AnalyticService {
               Object.assign(analyticsData.payload, item.product);
 
               this._sendAnalytic(analyticsData).then((result ) => {
-                if (result.status !== 'ok') this.deleteSessionItem(item.product.id);
+                if (result.status !== 'ok') this._deleteSessionItem(item.product.id);
               });
             });
         }
@@ -54,7 +56,7 @@ export class AnalyticService {
     observer.observe(item.view.root)
   }
 
-  static sendAddedProduct(item: ProductData) {
+  sendAddedProduct(item: ProductData) {
     let analyticsData = {
       type: 'addToCard',
       payload: { ...item },
@@ -64,7 +66,7 @@ export class AnalyticService {
     this._sendAnalytic(analyticsData);
   }
 
-  static async sendPurchase(items: ProductData[], totalPrice: string) {
+  sendPurchase(items: ProductData[], totalPrice: string) {
     let idArr: number[] = [];
     items.forEach(el => idArr.push(el.id));
 
@@ -82,7 +84,7 @@ export class AnalyticService {
 
   }
 
-  private static async _sendAnalytic(data: object, url = this.url,) {
+  private async _sendAnalytic(data: object, url = this.url,) {
 
     let status = 'ok';
 
@@ -109,12 +111,11 @@ export class AnalyticService {
     }
   }
 
-  private static _sendAnalyticPurchase(data: object, url = this.url,) {
+  private _sendAnalyticPurchase(data: object, url = this.url,) {
     navigator.sendBeacon(url, JSON.stringify(data));
-
   }
 
-  static setSessionData(id: number) {
+   private _setSessionData(id: number) {
     let sessionData = sessionStorage.getItem('lookedProducts') ?? '';
     let lookedProducts = sessionData ? JSON.parse(sessionData) : [];
 
@@ -122,13 +123,13 @@ export class AnalyticService {
     sessionStorage.setItem('lookedProducts', JSON.stringify(lookedProducts))
   }
 
-  static getSessionData() {
+   private _getSessionData() {
     let sessionData = sessionStorage.getItem('lookedProducts') ?? '';
     return sessionData ? JSON.parse(sessionData) : [];
   }
 
-  static checkSessionData(id: number) {
-    let data = this.getSessionData();
+   private _checkSessionData(id: number) {
+    let data = this._getSessionData();
     let result = false;
     if (data.includes(id)) {
       result = true;
@@ -136,10 +137,12 @@ export class AnalyticService {
     return result;
   }
 
-  static deleteSessionItem(id: number) {
-    let data = this.getSessionData();
+   private _deleteSessionItem(id: number) {
+    let data = this._getSessionData();
     data = data.filter((el: number) => el != id);
     sessionStorage.setItem('lookedProducts', JSON.stringify(data))
   }
 
 }
+
+export const analyticSevice = new AnalyticService();

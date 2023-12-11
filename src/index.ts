@@ -3,14 +3,14 @@ import Router from "./router";
 import { cartService } from "./services/cart.service";
 import { userService } from "./services/user.service";
 import { favouriteService } from "./services/favourite.service";
-import { AnalyticService } from "./services/analytic.service";
+import { analyticSevice } from "./services/analytic.service";
 
 
 new Router();
 cartService.init();
 userService.init();
 favouriteService.init();
-new AnalyticService().init();
+analyticSevice.init();
 
 setTimeout(() => {
   document.body.classList.add("is__ready");
