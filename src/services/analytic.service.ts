@@ -46,7 +46,11 @@ export class AnalyticService {
               Object.assign(analyticsData.payload, item.product);
 
               this._sendAnalytic(analyticsData).then((result ) => {
-                if (result.status !== 'ok') this._deleteSessionItem(item.product.id);
+                if (result.status !== 'ok') {
+                  this._deleteSessionItem(item.product.id);
+                } else {
+                  observer.unobserve(item.view.root);
+                }
               });
             });
         }
