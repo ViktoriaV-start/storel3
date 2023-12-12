@@ -1,6 +1,7 @@
 import { Component } from '../component';
 import html from './filter.tpl.html';
 import { ProductList } from '../productList/productList';
+import { userService } from "../../services/user.service";
 
 const SELECTOR_FILTER = '.filter';
 const SELECTOR_HELP = '.filter__help';
@@ -30,7 +31,6 @@ class Filter extends Component {
         if (el.name) this.productsNames.push(el.name)
       });
     })
-
   }
 
   //TODO - убрать метод после окончания работы.
@@ -49,7 +49,6 @@ class Filter extends Component {
   render() {
     this._init();
   }
-
 
   private _init() {
     //TODO - убрать по окончанию работы над модулем
@@ -91,7 +90,6 @@ class Filter extends Component {
     })
   }
 
-
   private async _filter() {
 
     const searchValue = this.filterContainer?.querySelector('input')?.value.trim() ?? '';
@@ -109,11 +107,10 @@ class Filter extends Component {
     }
   }
 
-
-  fetching() {
+  async fetching() {
     return fetch('/api/getProducts', {
       headers: {
-       'x-userid': window.userId
+       'x-userid': await userService.getId()
       }
     })
       .then((res) => res.json())

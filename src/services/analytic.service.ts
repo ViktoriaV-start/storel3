@@ -4,8 +4,7 @@ import { genUUID } from "../utils/helpers";
 
 
 export class AnalyticService {
-  //url = '/api/sendEvent';
-  url = 'http://localhost:8888/';
+  url = '/api/sendEvent';
 
   init() {
     window.addEventListener("load", this.sendPath.bind(this));
