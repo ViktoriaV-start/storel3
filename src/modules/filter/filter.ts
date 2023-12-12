@@ -74,7 +74,7 @@ class Filter extends Component {
       }
     })
 
-    this.filterContainer?.addEventListener('click', (ev) => {
+    document.querySelector('body')?.addEventListener('click', (ev) => {
       const { target } = ev;
 
       if (target && (target as HTMLButtonElement).classList.contains(CLASS_HELP_BTN)) {
@@ -83,10 +83,11 @@ class Filter extends Component {
         this.filterContainer.querySelector(SELECTOR_INPUT).value = target.textContent;
         this._filter();
       }
-    })
 
-    this.filterContainer?.querySelector(SELECTOR_INPUT)?.addEventListener('blur', () => {
-      this._filter();
+      if (!(target as HTMLButtonElement).classList.contains('filter__input')) {
+        this.helpContainer?.classList.add('hide');
+      }
+
     })
   }
 
