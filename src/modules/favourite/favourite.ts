@@ -13,7 +13,6 @@ class Favourite extends Component {
 
     this.favouriteProducts = new ProductList();
     this.favouriteProducts.attach(this.view.favourite);
-    favouriteService.checkFav();
   }
 
   render() {

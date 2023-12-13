@@ -7,6 +7,11 @@ const HEAD_COUNTER = '.js__fav-counter';
 
 class FavouriteService extends GeneralService {
 
+  init() {
+    super.init();
+    this.checkFav();
+  }
+
   async updCounters() {
     const products = await this.get();
     const count = products.length >= 10 ? '9+' : products.length;
