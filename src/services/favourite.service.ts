@@ -7,29 +7,33 @@ const HEAD_COUNTER = '.js__fav-counter';
 
 class FavouriteService extends GeneralService {
 
-     async updCounters() {
-        const products = await this.get();
-        const count = products.length >= 10 ? '9+' : products.length;
+  init() {
+    super.init();
+    this.checkFav();
+  }
 
-        //@ts-ignore
-        document.querySelectorAll(HEAD_COUNTER).forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
-    }
+  async updCounters() {
+    const products = await this.get();
+    const count = products.length >= 10 ? '9+' : products.length;
 
-    async isInFav(product: ProductData) {
-        const products = await this.get();
-        return products.some(({ id }) => id === product.id);
-    }
+    //@ts-ignore
+    document.querySelectorAll(HEAD_COUNTER).forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
+  }
 
-    checkFav() {
-        this.get().then((res) => {
-            if (res.length) {
-                document.querySelector(HEAD_HREF)?.classList.remove('hide');
-            } else {
-                document.querySelector(HEAD_HREF)?.classList.add('hide');
-            }
-        })
-    }
+  async isInFav(product: ProductData) {
+    const products = await this.get();
+    return products.some(({ id }) => id === product.id);
+  }
 
+  checkFav() {
+    this.get().then((res) => {
+      if (res.length) {
+        document.querySelector(HEAD_HREF)?.classList.remove('hide');
+      } else {
+        document.querySelector(HEAD_HREF)?.classList.add('hide');
+      }
+    })
+  }
 }
 
 export const favouriteService = new FavouriteService(DB);
