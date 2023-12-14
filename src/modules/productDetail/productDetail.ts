@@ -42,9 +42,9 @@ class ProductDetail extends Component {
     this.view.btnFav.onclick = this._addFavourite.bind(this);
     this.view.btnFavColor.onclick = this._removeFavourite.bind(this);
 
-    this._setFav();
+    await this._setFav();
 
-    const isInCart = await cartService.isInCart(this.product);
+    const isInCart = await cartService.isAdded(this.product);
 
     if (isInCart) this._setInCart();
 
@@ -88,7 +88,7 @@ class ProductDetail extends Component {
   private async _setFav() {
     if (!this.product) return;
 
-    if (await favouriteService.isInFav(this.product)) {
+    if (await favouriteService.isAdded(this.product)) {
       document.querySelector('.btnFav[data-tag="btnFav"]')?.classList.add('hide');
       document.querySelector('.btnFav[data-tag="btnFavColor"]')?.classList.remove('hide');
     } else {

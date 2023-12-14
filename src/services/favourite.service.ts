@@ -1,28 +1,12 @@
-import { ProductData } from 'types';
 import { GeneralService } from "./general.service";
 
-const DB = '__wb-fav';
 const HEAD_HREF = '.header__favourite';
-const HEAD_COUNTER = '.js__fav-counter';
 
 class FavouriteService extends GeneralService {
 
   init() {
     super.init();
     this.checkFav();
-  }
-
-  async updCounters() {
-    const products = await this.get();
-    const count = products.length >= 10 ? '9+' : products.length;
-
-    //@ts-ignore
-    document.querySelectorAll(HEAD_COUNTER).forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
-  }
-
-  async isInFav(product: ProductData) {
-    const products = await this.get();
-    return products.some(({ id }) => id === product.id);
   }
 
   checkFav() {
@@ -36,4 +20,4 @@ class FavouriteService extends GeneralService {
   }
 }
 
-export const favouriteService = new FavouriteService(DB);
+export const favouriteService = new FavouriteService('favourite');
