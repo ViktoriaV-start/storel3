@@ -5,6 +5,7 @@ import { genUUID } from "../utils/helpers";
 
 export class AnalyticService {
   url = '/api/sendEvent';
+  //url = 'http://localhost:8888/';
 
   init() {
     window.addEventListener("load", this.sendPath.bind(this));
@@ -62,7 +63,7 @@ export class AnalyticService {
 
   sendAddedProduct(item: ProductData) {
     let analyticsData = {
-      type: 'addToCard',
+      type: 'addToCart',
       payload: { ...item },
       timestamp: Date.now()
     }
