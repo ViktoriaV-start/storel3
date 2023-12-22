@@ -4,9 +4,13 @@ import html from './checkout.tpl.html';
 import { formatPrice } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
+import { analyticService } from "../../services/analytic.service";
+
 
 class Checkout extends Component {
   products!: ProductData[];
+
+  totalPrice = '';
 
   async render() {
     this.products = await cartService.get();
@@ -23,7 +27,8 @@ class Checkout extends Component {
     });
 
     const totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
-    this.view.price.innerText = formatPrice(totalPrice);
+    this.totalPrice = formatPrice(totalPrice);
+    this.view.price.innerText = this.totalPrice;
 
     this.view.btnOrder.onclick = this._makeOrder.bind(this);
   }
@@ -33,8 +38,17 @@ class Checkout extends Component {
     fetch('/api/makeOrder', {
       method: 'POST',
       body: JSON.stringify(this.products)
+    }).then((response) => {
+      if (response.ok) {
+        try{
+          analyticService.sendPurchase(this.products, this.totalPrice);
+        } catch(error) {
+          console.warn(error);
+        }
+        window.location.href = '/?isSuccessOrder'
+      }
     });
-    window.location.href = '/?isSuccessOrder';
+
   }
 }
 

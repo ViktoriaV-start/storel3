@@ -3,6 +3,7 @@ import { notFoundComp } from './modules/notFound/notFound';
 import { homepageComp } from './modules/homepage/homepage';
 import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
+import { analyticService } from "./services/analytic.service";
 
 const ROUTES = {
   '/': homepageComp,
@@ -20,6 +21,7 @@ export default class Router {
 
     window.addEventListener('load', this.route.bind(this));
     window.addEventListener('hashchange', this.route.bind(this));
+    analyticService.init();
   }
 
   route(e: any) {
