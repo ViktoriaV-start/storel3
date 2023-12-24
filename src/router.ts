@@ -21,7 +21,6 @@ export default class Router {
 
     window.addEventListener('load', this.route.bind(this));
     window.addEventListener('hashchange', this.route.bind(this));
-    analyticService.init();
   }
 
   route(e: any) {
@@ -32,5 +31,6 @@ export default class Router {
 
     component.attach(this.$appRoot);
     component.render();
+    analyticService.sendPath();
   }
 }
