@@ -1,5 +1,6 @@
 import { ProductData } from 'types';
 import { GeneralService } from "./general.service";
+import { ProductDetail } from '../modules/productDetail/productDetail';
 
 const DB = '__wb-fav';
 const HEAD_HREF = '.header__favourite';
@@ -33,6 +34,21 @@ class FavouriteService extends GeneralService {
         document.querySelector(HEAD_HREF)?.classList.add('hide');
       }
     })
+  }
+
+  async handleClick(item: ProductDetail) {
+
+    return new Promise(async (resolve) => {
+      if (!item.product) return;
+      if (await this.isInFav(item.product)) {
+        await this.removeProduct(item.product);
+        resolve('ok');
+      } else {
+        await this.addProduct(item.product)
+        resolve('ok');
+      }
+    }).then(() => this.checkFav());
+
   }
 }
 

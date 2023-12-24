@@ -18,6 +18,7 @@ class Favourite extends Component {
   render() {
     favouriteService.get()
         .then((products) => {
+          if (!products.length) window.location.pathname = '/';
           this.favouriteProducts.update(products);
         });
   }

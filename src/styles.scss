@@ -91,9 +91,12 @@ img {
   margin: 0;
 
   svg {
-    width: 32px;
+    width: 34px;
     height: 32px;
     margin-top: 4px;
+    stroke: var(--key-color);;
+    stroke-width: 34px;
+    fill: transparent;
   }
 }
 
@@ -176,8 +179,7 @@ img {
   }
 }
 
-
-.btnFav_colored {
+.btnFav_colored .svg-icon {
   fill: var(--key-color);
 }
 
