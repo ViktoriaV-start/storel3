@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2377d168-ca8d-4b32-885d-62c1cb1f7f1e" name="Changes" comment="" />
+    <list default="true" id="2377d168-ca8d-4b32-885d-62c1cb1f7f1e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/filter/_filter.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/search/_search.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/filter/filter.tpl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/search/search.tpl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/filter/filter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/search/search.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,6 +49,8 @@
       <updated>1703267363223</updated>
       <workItem from="1703267365551" duration="243000" />
       <workItem from="1703267610613" duration="10377000" />
+      <workItem from="1703438922214" duration="571000" />
+      <workItem from="1703515638992" duration="1828000" />
     </task>
     <servers />
   </component>
